@@ -14,15 +14,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-                .antMatchers("/login", "/resources/**").permitAll() // ログインページと静的リソースを許可
-                .anyRequest().authenticated() // その他のリクエストには認証が必要
-            .and()
-            .formLogin()
-                .loginPage("/login") // カスタムログインページ
-                .defaultSuccessUrl("/home", true) // ログイン成功後のリダイレクト先
-                .permitAll()
+    	http
+        .authorizeHttpRequests() // authorizeRequests() を authorizeHttpRequests() に変更
+            .requestMatchers("/login", "/resources/**").permitAll() // antMatchers() を requestMatchers() に変更
+            .anyRequest().authenticated()
+        .and()
+        .formLogin()
+            .loginPage("/login")
+            .defaultSuccessUrl("/home", true)
+            .permitAll()
             .and()
             .logout()
                 .permitAll(); // ログアウトも許可
